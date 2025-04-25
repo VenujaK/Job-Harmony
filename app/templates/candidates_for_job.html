@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-primary mb-4">Top Candidates for Job: <span class="fw-light">{{ job_title }}</span></h2>
+
+{% if candidates %}
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for candidate in candidates %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ candidate.name }}</h5>
+            <h6 class="card-subtitle text-muted mb-2">Experience: {{ candidate.experience }} yrs</h6>
+            <p class="card-text">
+              <strong>Education:</strong> {{ candidate.education }}<br>
+              <strong>Skills:</strong> {{ candidate.skills }}<br>
+              <strong>Expected Salary:</strong> ${{ candidate.salary_expectations | int }}<br>
+              <strong>Match Score:</strong> <span class="text-success">{{ candidate.match_score | round(2) }}</span>
+            </p>
+            <!-- Add a call-to-action here if needed -->
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-warning">No suitable candidates found for this job. Try refining your job post or adjusting salary range.</div>
+{% endif %}
+
+{% endblock %}

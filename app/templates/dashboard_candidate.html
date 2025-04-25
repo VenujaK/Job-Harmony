@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-primary">Candidate Dashboard</h2>
+  <a href="/candidate/profile" class="btn btn-outline-primary">Edit Profile</a>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Recommended Jobs</h5>
+        <p class="card-text text-muted">View job matches based on your skills and preferences.</p>
+        <a href="/candidate/recommendations" class="btn btn-primary w-100">See Recommendations</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Saved Jobs</h5>
+        <p class="card-text text-muted">Access the job listings you’ve saved for later.</p>
+        <a href="/candidate/saved-jobs" class="btn btn-outline-primary w-100">View Saved Jobs</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Track Applications</h5>
+        <p class="card-text text-muted">See the status of jobs you’ve applied for.</p>
+        <a href="/candidate/my-applications" class="btn btn-outline-primary w-100">View My Applications</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

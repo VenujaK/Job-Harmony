@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h2 class="mb-4 text-primary text-center">Post a New Job</h2>
+
+        <form method="POST" action="/employer/post-job">
+          <div class="mb-3">
+            <label for="title" class="form-label">Job Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="e.g. Software Engineer" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Job Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Short job overview..." required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="required_skills" class="form-label">Required Skills</label>
+            <textarea class="form-control" id="required_skills" name="required_skills" rows="2" placeholder="e.g. Python, SQL, APIs" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="required_education" class="form-label">Required Education</label>
+            <select class="form-select" id="required_education" name="required_education" required>
+              <option value="">Select Education Level</option>
+              <option value="High School">High School</option>
+              <option value="Bachelor's">Bachelor's</option>
+              <option value="Master's">Master's</option>
+              <option value="PhD">PhD</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="salary_min" class="form-label">Min Salary</label>
+              <input type="number" class="form-control" id="salary_min" name="salary_min" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="salary_max" class="form-label">Max Salary</label>
+              <input type="number" class="form-control" id="salary_max" name="salary_max" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="job_type" class="form-label">Job Type</label>
+            <select class="form-select" id="job_type" name="job_type" required>
+              <option value="">Select Type</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Remote">Remote</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Colombo, Remote" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Post Job</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

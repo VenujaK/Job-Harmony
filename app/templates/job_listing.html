@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-primary mb-4">Job Listings</h2>
+
+{% if jobs %}
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for job in jobs %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ job.title }}</h5>
+            <h6 class="card-subtitle text-muted mb-2">{{ job.location }} • {{ job.job_type }}</h6>
+            <p class="card-text">
+              <strong>Skills:</strong> {{ job.required_skills }}<br>
+              <strong>Education:</strong> {{ job.required_education }}<br>
+              <strong>Salary:</strong> ${{ job.salary_min }} - ${{ job.salary_max }}
+            </p>
+            {% if job.match_score is defined %}
+              <p class="text-success">Match Score: {{ job.match_score | round(2) }}</p>
+            {% endif %}
+            {% if session['user']['type'] == 'candidate' %}
+              <a href="/apply/{{ job.job_id or job.id }}" class="btn btn-primary btn-sm">Apply</a>
+              <a href="/candidate/save-job/{{ job.job_id or job.id }}" class="btn btn-outline-secondary btn-sm">Save</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">No jobs found. Try again later or update your profile.</div>
+{% endif %}
+
+{% endblock %}

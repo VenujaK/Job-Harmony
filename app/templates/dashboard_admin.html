@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-danger">Admin Dashboard</h2>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card h-100 border-danger shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-danger">Manage Users</h5>
+        <p class="card-text text-muted">View all users, filter by type, and delete unauthorized accounts.</p>
+        <a href="/admin/users" class="btn btn-danger w-100">View All Users</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card h-100 border-danger shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-danger">Manage Jobs</h5>
+        <p class="card-text text-muted">Browse all posted jobs and remove spam or irrelevant listings.</p>
+        <a href="/admin/jobs" class="btn btn-outline-danger w-100">View All Jobs</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

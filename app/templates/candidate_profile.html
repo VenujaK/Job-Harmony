@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+        <h2 class="mb-4 text-primary text-center">Update Your Profile</h2>
+
+        <form method="POST" action="/candidate/profile">
+          <div class="mb-3">
+            <label for="experience" class="form-label">Years of Experience</label>
+            <input type="number" class="form-control" id="experience" name="experience" min="0" max="50" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="education" class="form-label">Education Level</label>
+            <select class="form-select" id="education" name="education" required>
+              <option value="">Select Education Level</option>
+              <option value="High School">High School</option>
+              <option value="Bachelor's">Bachelor's</option>
+              <option value="Master's">Master's</option>
+              <option value="PhD">PhD</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="skills" class="form-label">Technical Skills</label>
+            <textarea class="form-control" id="skills" name="skills" rows="3" placeholder="e.g. Python, HTML, React" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="salary" class="form-label">Expected Salary ($)</label>
+            <input type="number" class="form-control" id="salary" name="salary" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Save Profile</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

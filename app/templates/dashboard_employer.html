@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="text-primary">Employer Dashboard</h2>
+  <a href="/employer/post-job" class="btn btn-outline-primary">Post a Job</a>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Your Job Listings</h5>
+        <p class="card-text text-muted">View and manage the jobs you’ve posted.</p>
+        <a href="/employer/my-jobs" class="btn btn-primary w-100">View My Jobs</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Top Candidates</h5>
+        <p class="card-text text-muted">Find candidates that best match your job listings using AI.</p>
+        <a href="/employer/my-jobs" class="btn btn-outline-primary w-100">View & Match</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Received Applications</h5>
+        <p class="card-text text-muted">Track who has applied to your job posts.</p>
+        <a href="/employer/my-jobs" class="btn btn-outline-primary w-100">Manage Applications</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
