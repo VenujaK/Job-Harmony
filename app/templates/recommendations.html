@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="jobs">
+  <div class="container">
+    <div class="section-title">
+      <h2>Top Job Matches for You</h2>
+      <p>Jobs picked by our AI engine based on your profile</p>
+    </div>
+
+    {% if jobs %}
+    <div class="job-listings">
+      {% for job in jobs %}
+      <div class="job-card">
+        <span class="job-type">{{ job.job_type }}</span>
+        <div class="job-header">
+          <div class="company-logo">
+            <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="{{ job.company }}">
+          </div>
+          <div class="job-info">
+            <h3>{{ job.title }}</h3>
+            <p class="company">{{ job.company }}</p>
+            <div class="job-meta">
+              <span><i class="fas fa-map-marker-alt"></i> {{ job.location }}</span>
+              <span><i class="fas fa-briefcase"></i> {{ job.experience or 'N/A' }}</span>
+              <span><i class="fas fa-clock"></i> {{ job.posted_ago or 'Recently' }}</span>
+            </div>
+          </div>
+        </div>
+        {% if job.description %}
+        <div class="job-description">
+          {{ job.description[:180] }}...
+        </div>
+        {% endif %}
+        {% if job.required_skills %}
+        <div class="job-skills">
+          {% for skill in job.required_skills.split(',') %}
+          <span class="skill-tag">{{ skill.strip() }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="job-footer">
+          <span class="salary">
+            {% if job.salary_min and job.salary_max %}
+              ${{ job.salary_min }} - ${{ job.salary_max }}
+            {% elif job.salary_range %}
+              {{ job.salary_range }}
+            {% else %}
+              Salary not listed
+            {% endif %}
+          </span>
+          <div>
+            <a href="/candidate/apply/{{ job.id }}" class="btn btn-primary btn-sm">Apply</a>
+            <a href="/candidate/save-job/{{ job.job_id or job.id }}" class="btn btn-outline-secondary btn-sm ms-2">Save</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+      No recommendations available yet. Try updating your profile.
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

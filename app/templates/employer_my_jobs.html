@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-primary mb-4">My Posted Jobs</h2>
+
+  {% if jobs %}
+    <div class="list-group">
+      {% for job in jobs %}
+        <div class="list-group-item mb-3 shadow-sm rounded">
+          <h5>{{ job.title }}</h5>
+          <p class="mb-1">{{ job.location }} | {{ job.job_type }}</p>
+          <a href="/employer/edit-job/{{ job.id }}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="/employer/match-candidates/{{ job.id }}" class="btn btn-info btn-sm">Match Candidates</a>
+          <a href="/employer/job-applications/{{ job.id }}" class="btn btn-secondary btn-sm">Applications</a>
+          <small class="text-muted">Posted on {{ job.posted_at.strftime('%b %d, %Y') }}</small>
+          
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">You have not posted any jobs yet.</div>
+    
+  {% endif %}
+</div>
+{% endblock %}

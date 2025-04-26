@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-primary mb-4">Best Matches for: <strong>{{ job.title }}</strong></h2>
+  <p class="text-muted">Location: {{ job.location }} | Type: {{ job.job_type }}</p>
+
+  {% if candidates %}
+    <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
+      {% for c in candidates %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0 rounded-4">
+            <div class="card-body">
+              <h5 class="card-title">Candidate ID: {{ c.user_id }}</h5>
+              <p class="card-text">
+                <strong>Experience:</strong> {{ c.years_experience }} years<br>
+                <strong>Education:</strong> {{ c.education_level }}<br>
+                <strong>Expected Salary:</strong> ${{ c.salary_expectations }}<br>
+              </p>
+              <p><strong>Skills:</strong><br>{{ c.technical_skills }}</p>
+            </div>
+            <div class="card-footer bg-white border-top">
+                <a href="mailto:{{ c.email }}">{{ c.email }}</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center mt-4">
+      No matching candidates found for this job.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

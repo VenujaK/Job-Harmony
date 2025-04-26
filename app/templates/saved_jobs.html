@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="py-5" style="background-color: #f8f9fa;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold" style="color: #003F59; font-family: sans-serif;">Saved Jobs</h2>
+      <p class="text-muted">All jobs you’ve saved for later.</p>
+    </div>
+
+    {% if jobs %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for job in jobs %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h5 class="card-title text-primary">{{ job.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ job.location }} • {{ job.job_type }}</h6>
+            <p class="card-text text-muted small">{{ job.required_skills }}</p>
+            <p class="card-text">
+              <strong>Salary:</strong> {{ job.salary_range }}
+            </p>
+          </div>
+          <div class="card-footer bg-transparent border-0 d-flex justify-content-between">
+            <a href="/apply/{{ job.job_id or job.id }}" class="btn btn-primary btn-sm">Apply</a>
+            <a href="/candidate/remove-saved/{{ job.job_id or job.id }}" class="btn btn-outline-danger btn-sm">Remove</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+      You haven’t saved any jobs yet.
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,280 +1,987 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Custom CSS -->
-<style>
-  body {
-    font-family: 'Lexend', sans-serif;
-  }
-  
-  .bg-primary-custom {
-    background-color: #2556a6 !important;
-  }
-  
-  .bg-secondary-custom {
-    background-color: #81affa !important;
-  }
-  
-  .text-primary-custom {
-    color: #2556a6 !important;
-  }
-  
-  .text-secondary-custom {
-    color: #81affa !important;
-  }
-  
-  .btn-primary-custom {
-    background-color: #2556a6;
-    border-color: #2556a6;
-    color: white;
-  }
-  
-  .btn-primary-custom:hover {
-    background-color: #1d4690;
-    border-color: #1d4690;
-  }
-  
-  .btn-secondary-custom {
-    background-color: #81affa;
-    border-color: #81affa;
-    color: #2556a6;
-  }
-  
-  .btn-secondary-custom:hover {
-    background-color: #6a9ef8;
-    border-color: #6a9ef8;
-  }
-  
-  .card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .card-hover:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
-  }
-  
-  .hero-image {
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  }
-  
-  .testimonial-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border: 3px solid white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  
-  .icon-box {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Harmony - Where Talent Meets Opportunity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .search-container .btn {
+            padding: 15px 30px;
+        }
+        
+        .ai-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .ai-feature .btn {
+            background: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .ai-feature .btn:hover {
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .ai-feature .btn i {
+            color: var(--accent);
+        }
+        
+        /* About Us */
+        .about {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .feature-text h4 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .feature-text p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+        
+        /* Job Listings */
+        .jobs {
+            padding: 80px 0;
+            background: #f5f7ff;
+        }
+        
+        .job-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: white;
+            color: var(--dark);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .filter-tab:hover:not(.active) {
+            background: #f0f0f0;
+        }
+        
+        .view-all {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .job-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+        
+        .job-card .job-type {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-bottom-left-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .job-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: #f0f4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .company-logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+        
+        .job-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .job-info .company {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .job-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .job-meta i {
+            color: var(--accent);
+        }
+        
+        .job-description {
+            margin: 20px 0;
+            color: #555;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .job-skills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .skill-tag {
+            background: #f0f4ff;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .job-footer .salary {
+            font-weight: 600;
+            color: var(--success);
+        }
+        
+        .job-footer .btn {
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .testimonial-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 20px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 60px;
+            color: rgba(76, 201, 240, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 20px;
+            color: #555;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .slick-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            list-style: none;
+        }
+        
+        .slick-dots li {
+            margin: 0 5px;
+        }
+        
+        .slick-dots button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            border: none;
+            font-size: 0;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .slick-dots .slick-active button {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .cta-buttons .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-white:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        
+        .btn-transparent {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-transparent:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-column p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .ai-feature {
+                justify-content: center;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .section-title h2 {
+                font-size: 30px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-listings {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+   
 
-<!-- 🌟 HERO SECTION -->
-<section class="py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <h1 class="display-4 fw-bold mb-4 text-primary-custom">Find Your Perfect Career Match</h1>
-        <p class="lead mb-4">AI-powered job matching that understands your skills and aspirations.</p>
-        <div class="d-flex flex-wrap gap-3">
-          <a href="/jobs" class="btn btn-primary-custom btn-lg px-4 shadow">Browse Jobs</a>
-          <a href="/auth/register" class="btn btn-outline-primary btn-lg px-4">Get Started</a>
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Find Your Dream Job or Ideal Candidate with AI</h1>
+                    <p>Job Harmony uses advanced AI matching to connect the right talent with the right opportunities, creating perfect career symphonies.</p>
+                    
+                    
+                    
+                   
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Happy team at work">
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-lg-6">
-        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" 
-             alt="Career growth" 
-             class="img-fluid hero-image">
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 🎯 FEATURES -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold text-primary-custom">Why Choose Us</h2>
-      <p class="lead text-muted">Smart features for your career journey</p>
-    </div>
+    <!-- About Us -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Job Harmony?</h2>
+                <p>We're revolutionizing the job market with intelligent matching technology that benefits both job seekers and employers.</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team working together">
+                </div>
+                <div class="about-text">
+                    <h3>Harmonizing the Job Market with AI</h3>
+                    <p>Job Harmony isn't just another job board - we're a next-generation career platform that uses artificial intelligence to analyze skills, experience, culture fit, and potential to create meaningful connections.</p>
+                    <p>Our proprietary matching algorithm considers hundreds of data points to ensure candidates and companies find their perfect match, saving time and improving outcomes for everyone.</p>
+                    
+                    <div class="features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Smart Matching</h4>
+                                <p>AI analyzes profiles to suggest the best matches with 92% accuracy</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Career Growth</h4>
+                                <p>Personalized recommendations to help you progress in your career</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Time Saving</h4>
+                                <p>Reduce hiring time by up to 70% with our efficient process</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Diverse Talent</h4>
+                                <p>Access to a global pool of qualified and vetted professionals</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="jobs">
+      <div class="container">
+        <div class="section-title">
+          <h2>Featured Job Opportunities</h2>
+          <p>Discover positions matched to your profile and preferences</p>
+        </div>
     
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-3 h-100 card-hover">
-          <div class="card-body p-4 text-center">
-            <div class="icon-box bg-primary-custom bg-opacity-10 text-primary-custom mb-4 mx-auto">
-              <i class="bi bi-robot fs-3"></i>
-            </div>
-            <h4 class="fw-bold">AI Matching</h4>
-            <p>Our algorithm matches you with jobs that fit your unique profile perfectly.</p>
-          </div>
+        <div class="job-filters">
+          <a href="./jobs" class="view-all">
+            View all jobs
+            <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-3 h-100 card-hover">
-          <div class="card-body p-4 text-center">
-            <div class="icon-box bg-primary-custom bg-opacity-10 text-primary-custom mb-4 mx-auto">
-              <i class="bi bi-lightning-charge fs-3"></i>
-            </div>
-            <h4 class="fw-bold">Quick Apply</h4>
-            <p>One-click applications to save you time and effort.</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-3 h-100 card-hover">
-          <div class="card-body p-4 text-center">
-            <div class="icon-box bg-primary-custom bg-opacity-10 text-primary-custom mb-4 mx-auto">
-              <i class="bi bi-graph-up fs-3"></i>
-            </div>
-            <h4 class="fw-bold">Career Growth</h4>
-            <p>Discover opportunities that align with your long-term goals.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 💼 JOB LISTINGS -->
-<section class="py-5">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold text-primary-custom">Featured Job Listings</h2>
-      <p class="lead text-muted">Opportunities waiting for you</p>
-    </div>
     
-    <div class="row g-4">
-      {% for job in jobs[:3] %}
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-3 h-100 card-hover">
-          <div class="card-body p-4">
-            <div class="d-flex align-items-center mb-3">
-              <img src="https://logo.clearbit.com/{{ job.company|urlencode }}.com?size=40" 
-                   alt="{{ job.company }}" 
-                   class="rounded-circle me-3"
-                   onerror="this.src='https://ui-avatars.com/api/?name={{ job.company|urlencode }}&background=2556a6&color=fff'">
-              <div>
-                <h5 class="fw-bold mb-0">{{ job.title }}</h5>
-                <small class="text-muted">{{ job.company }}</small>
+        <div class="job-listings">
+          {% for job in jobs %}
+          <div class="job-card">
+            <span class="job-type">{{ job.job_type }}</span>
+            <div class="job-header">
+              <div class="company-logo">
+                <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="{{ job.company }}">
+              </div>
+              <div class="job-info">
+                <h3>{{ job.title }}</h3>
+                <p class="company">{{ job.company }}</p>
+                <div class="job-meta">
+                  <span><i class="fas fa-map-marker-alt"></i> {{ job.location }}</span>
+                  <span><i class="fas fa-briefcase"></i> {{ job.experience or 'N/A' }}</span>
+                  <span><i class="fas fa-clock"></i> {{ job.posted_ago or 'Recently' }}</span>
+                </div>
               </div>
             </div>
-            <div class="mb-3">
-              <span class="badge bg-secondary-custom text-primary-custom me-1">{{ job.job_type }}</span>
-              <span class="badge bg-light text-dark me-1">{{ job.location }}</span>
+            <div class="job-description">
+              {{ job.description[:180] }}...
             </div>
-            <p class="mb-3">{{ job.description[:100] }}...</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary-custom">${{ job.salary_min }}k - ${{ job.salary_max }}k</span>
-              <a href="/jobs/{{ job.id }}" class="btn btn-sm btn-primary-custom">View</a>
+            {% if job.required_skills %}
+            <div class="job-skills">
+              {% for skill in job.required_skills.split(',') %}
+              <span class="skill-tag">{{ skill.strip() }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <div class="job-footer">
+              <span class="salary">
+                {% if job.salary_min and job.salary_max %}
+                  ${{ job.salary_min }} - ${{ job.salary_max }}
+                {% else %}
+                  Salary not listed
+                {% endif %}
+              </span>
+              
             </div>
           </div>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %}
-    </div>
-    
-    <div class="text-center mt-4">
-      <a href="/jobs" class="btn btn-outline-primary-custom">View All Jobs <i class="bi bi-arrow-right ms-1"></i></a>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 💬 TESTIMONIALS -->
-<section class="py-5 bg-secondary-custom text-white">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold">Success Stories</h2>
-      <p class="lead opacity-75">What our users say about us</p>
-    </div>
-    
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card border-0 shadow rounded-3 h-100 bg-white text-dark">
-          <div class="card-body p-4 text-center">
-            <img src="https://randomuser.me/api/portraits/women/32.jpg" 
-                 alt="Sarah" 
-                 class="testimonial-img rounded-circle mb-3">
-            <div class="mb-3 text-warning">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Success Stories</h2>
+                <p>Hear from people who found their perfect match through Job Harmony</p>
             </div>
-            <p class="fst-italic mb-4">"Found my dream job in just two weeks! The AI matching was incredibly accurate."</p>
-            <h5 class="fw-bold mb-1">Sarah T.</h5>
-            <p class="text-muted small">UX Designer</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="card border-0 shadow rounded-3 h-100 bg-white text-dark">
-          <div class="card-body p-4 text-center">
-            <img src="https://randomuser.me/api/portraits/men/45.jpg" 
-                 alt="James" 
-                 class="testimonial-img rounded-circle mb-3">
-            <div class="mb-3 text-warning">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
+            
+            <div class="testimonial-slider">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Job Harmony's AI matching connected me with a startup that perfectly aligned with my skills and values. I went from frustrated job seeker to thriving team member in just 3 weeks!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Product Manager at TechStart</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "As a hiring manager, I was skeptical about AI matching at first. But Job Harmony delivered 5 perfect candidates for our hard-to-fill role when traditional methods failed. We hired an amazing candidate in half the usual time."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Director of Engineering at DataCorp</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "After being laid off, I was overwhelmed by the job search. Job Harmony's personalized recommendations and AI coach helped me identify growth areas and land a better position than my previous one. The salary match feature was spot on!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Patel">
+                        </div>
+                        <div class="author-info">
+                            <h4>Priya Patel</h4>
+                            <p>Senior Data Analyst at FinTech Solutions</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="fst-italic mb-4">"As a recruiter, this platform saved us countless hours in the hiring process."</p>
-            <h5 class="fw-bold mb-1">James L.</h5>
-            <p class="text-muted small">HR Manager</p>
-          </div>
         </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="card border-0 shadow rounded-3 h-100 bg-white text-dark">
-          <div class="card-body p-4 text-center">
-            <img src="https://randomuser.me/api/portraits/women/68.jpg" 
-                 alt="Priya" 
-                 class="testimonial-img rounded-circle mb-3">
-            <div class="mb-3 text-warning">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-            </div>
-            <p class="fst-italic mb-4">"The career growth suggestions helped me land a 30% higher salary offer."</p>
-            <h5 class="fw-bold mb-1">Priya K.</h5>
-            <p class="text-muted small">Data Scientist</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 📞 CTA SECTION -->
-<section class="py-5 bg-primary-custom text-white">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-8 mb-4 mb-lg-0">
-        <h2 class="fw-bold mb-3">Ready to transform your career?</h2>
-        <p class="lead mb-0">Join thousands of professionals who found their dream jobs through our platform.</p>
-      </div>
-      <div class="col-lg-4 text-lg-end">
-        <a href="/auth/register" class="btn btn-light btn-lg px-4 fw-bold">Get Started Now</a>
-      </div>
-    </div>
-  </div>
-</section>
+    
+
+    
 
 {% endblock %}

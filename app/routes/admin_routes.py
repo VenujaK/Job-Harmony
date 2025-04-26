@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template, session, redirect, flash
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.db import get_db
 
@@ -12,21 +12,36 @@ def is_admin():
     identity = get_jwt_identity()
     return identity['type'] == 'admin'
 
+@admin_bp.route('/dashboard')
+def admin_dashboard():
+    user = session.get('user')
+    if not user or user.get('type') != 'admin':
+        flash('You must be logged in as an admin.', 'danger')
+        return redirect('/auth/login')
+
+    return render_template('dashboard_admin.html', user=user)
+
 
 # ----------------------------
 # View All Users
 # ----------------------------
-@admin_bp.route('/users', methods=['GET'])
-@jwt_required()
-def view_users():
-    if not is_admin():
-        return jsonify({'error': 'Unauthorized'}), 403
+@admin_bp.route('/users')
+def view_all_users():
+    user = session.get('user')
+    if not user or user.get('type') != 'admin':
+        flash('You must be logged in as an admin to view this page.', 'danger')
+        return redirect('/auth/login')
 
     db, cursor = get_db()
-    cursor.execute("SELECT id, name, email, user_type, created_at FROM users ORDER BY created_at DESC")
-    users = cursor.fetchall()
+    cursor.execute("SELECT id, name, email, user_type FROM users ORDER BY id DESC")
 
-    return jsonify(users)
+
+    rows = cursor.fetchall()
+    colnames = [desc[0] for desc in cursor.description]
+    users = [dict(zip(colnames, row)) for row in rows]
+
+    return render_template('admin_users.html', users=users)  # ✅ aligned correctly
+
 
 
 # ----------------------------
@@ -48,23 +63,26 @@ def delete_user(user_id):
 # ----------------------------
 # View All Job Postings
 # ----------------------------
-@admin_bp.route('/jobs', methods=['GET'])
-@jwt_required()
-def view_jobs():
-    if not is_admin():
-        return jsonify({'error': 'Unauthorized'}), 403
-
+@admin_bp.route('/jobs')
+def view_all_jobs():
     db, cursor = get_db()
+
     cursor.execute("""
-        SELECT j.id, j.title, j.required_skills, j.salary_min, j.salary_max,
-               j.location, j.job_type, j.posted_at, u.name AS employer_name
+        SELECT j.id, j.title, j.location, j.job_type, j.posted_at, u.name AS employer_name, u.email AS employer_email
         FROM jobs j
         JOIN users u ON j.employer_id = u.id
         ORDER BY j.posted_at DESC
     """)
-    jobs = cursor.fetchall()
+    
+    rows = cursor.fetchall()
+    columns = [col[0] for col in cursor.description]
+    jobs = [dict(zip(columns, row)) for row in rows]  # ✅ MUST BE HERE
 
-    return jsonify(jobs)
+    return render_template('admin_jobs.html', jobs=jobs)
+
+
+
+
 
 
 # ----------------------------
@@ -81,3 +99,5 @@ def delete_job(job_id):
     db.commit()
 
     return jsonify({'message': f'Job {job_id} deleted successfully.'})
+
+

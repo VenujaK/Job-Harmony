@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="py-5" style="background-color: #f8f9fa;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold" style="color: #003F59; font-family: sans-serif;">My Applications</h2>
+      <p class="text-muted">Here’s a record of jobs you’ve applied for</p>
+    </div>
+
+    {% if applications %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for app in applications %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h5 class="card-title text-primary">{{ app.title }}</h5>
+            <h6 class="card-subtitle text-muted mb-2">{{ app.location }} • {{ app.job_type }}</h6>
+            <p class="card-text small text-muted">{{ app.required_skills }}</p>
+            <p class="card-text">
+              <strong>Salary:</strong> ${{ app.salary_min }} - ${{ app.salary_max }}<br>
+              <strong>Status:</strong> <span class="badge bg-info text-dark">{{ app.status }}</span>
+            </p>
+          </div>
+          <div class="card-footer text-muted small bg-white border-top">
+            Applied on {{ app.applied_at.strftime('%b %d, %Y %I:%M %p') if app.applied_at else 'N/A' }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+      You haven’t applied for any jobs yet.
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

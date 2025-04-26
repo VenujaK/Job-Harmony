@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-primary mb-4">Edit Job</h2>
+
+  <form method="POST">
+    <div class="mb-3">
+      <label>Title</label>
+      <input type="text" name="title" class="form-control" value="{{ job.title }}" required>
+    </div>
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea name="description" class="form-control" rows="5" required>{{ job.description }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label>Required Skills</label>
+      <textarea name="required_skills" class="form-control" rows="3" required>{{ job.required_skills }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label>Required Education</label>
+      <select name="required_education" class="form-select">
+        <option {% if job.required_education == 'High School' %}selected{% endif %}>High School</option>
+        <option {% if job.required_education == "Bachelor's" %}selected{% endif %}>Bachelor's</option>
+        <option {% if job.required_education == "Master's" %}selected{% endif %}>Master's</option>
+        <option {% if job.required_education == 'PhD' %}selected{% endif %}>PhD</option>
+      </select>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label>Salary Min</label>
+        <input type="number" name="salary_min" class="form-control" value="{{ job.salary_min }}" required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Salary Max</label>
+        <input type="number" name="salary_max" class="form-control" value="{{ job.salary_max }}" required>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label>Job Type</label>
+      <select name="job_type" class="form-select">
+        <option {% if job.job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+        <option {% if job.job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+        <option {% if job.job_type == 'Contract' %}selected{% endif %}>Contract</option>
+        <option {% if job.job_type == 'Remote' %}selected{% endif %}>Remote</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>Location</label>
+      <input type="text" name="location" class="form-control" value="{{ job.location }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update Job</button>
+  </form>
+</div>
+{% endblock %}

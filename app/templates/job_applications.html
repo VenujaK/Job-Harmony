@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-primary mb-4">Applications for: <strong>{{ job.title }}</strong></h2>
+  <p class="text-muted">Location: {{ job.location }} | Type: {{ job.job_type }}</p>
+
+  {% if applications %}
+    <div class="row row-cols-1 g-4 mt-4">
+      {% for app in applications %}
+        <div class="col">
+          <div class="card shadow-sm rounded-4 border-0">
+            <div class="card-body">
+              <h5 class="card-title">Candidate ID: {{ app.user_id }}</h5>
+              <p class="card-text">
+                <strong>Education:</strong> {{ app.education_level }}<br>
+                <strong>Experience:</strong> {{ app.years_experience }} years<br>
+                <strong>Expected Salary:</strong> ${{ app.salary_expectations }}<br>
+                <strong>Skills:</strong> {{ app.technical_skills }}
+              </p>
+              <p class="mb-0 small text-muted">📧 Email: <strong>{{ app.email }}</strong></p>
+            </div>
+            <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+              <span class="badge bg-info text-dark">{{ app.status }}</span>
+              <span class="small text-muted">Applied on {{ app.applied_at.strftime('%b %d, %Y') }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center mt-4">
+      No applications received for this job yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-primary mb-4">All Posted Jobs</h2>
+
+  {% if jobs %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Job ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Location</th>
+            <th scope="col">Job Type</th>
+            <th scope="col">Posted At</th>
+            <th scope="col">Employer</th>
+            <th scope="col">Employer Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+            <tr>
+              <td>{{ job.id }}</td>
+              <td>{{ job.title }}</td>
+              <td>{{ job.location }}</td>
+              <td>{{ job.job_type }}</td>
+              <td>{{ job.posted_at[:10] }}</td>
+              <td>{{ job.employer_name }}</td>
+              <td>{{ job.employer_email }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">No jobs have been posted yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,7 +1,10 @@
-from flask import Blueprint, request, jsonify
+from app.models.user_model import create_user, get_user_by_email
+from flask import Blueprint, render_template, request, redirect, flash, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from app.models.db import get_db
+
+
 from flask import render_template
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -12,50 +15,61 @@ def home():
 # ----------------------------
 # User Registration (Signup)
 # ----------------------------
-@auth_bp.route('/register', methods=['POST'])
+@auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    data = request.get_json()
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
-    user_type = data.get('user_type')  # candidate, employer
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user_type = request.form.get('user_type')
 
-    if not all([name, email, password, user_type]):
-        return jsonify({'error': 'All fields are required.'}), 400
+        if not name or not email or not password or not user_type:
+            flash('All fields are required.', 'danger')
+            return redirect('/auth/register')
 
-    db, cursor = get_db()
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-    if cursor.fetchone():
-        return jsonify({'error': 'Email already exists.'}), 409
+        if get_user_by_email(email):
+            flash('Email already registered.', 'warning')
+            return redirect('/auth/register')
 
-    hashed_pw = generate_password_hash(password)
-    cursor.execute(
-        "INSERT INTO users (name, email, password, user_type) VALUES (%s, %s, %s, %s)",
-        (name, email, hashed_pw, user_type)
-    )
-    db.commit()
+        hashed_pw = generate_password_hash(password)
+        create_user(name, email, hashed_pw, user_type)
 
-    return jsonify({'message': 'User registered successfully.'}), 201
+        flash('Account created! You can now log in.', 'success')
+        return redirect('/auth/login')
+
+    return render_template('register.html')
 
 
 # ----------------------------
 # User Login
 # ----------------------------
-@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-    db, cursor = get_db()
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-    user = cursor.fetchone()
+        if not email or not password:
+            flash('Email and password are required.', 'danger')
+            return redirect('/auth/login')
 
-    if not user or not check_password_hash(user['password'], password):
-        return jsonify({'error': 'Invalid credentials'}), 401
+        user = get_user_by_email(email)
+        if not user or not check_password_hash(user['password'], password):
+            flash('Invalid credentials.', 'danger')
+            return redirect('/auth/login')
 
-    access_token = create_access_token(identity={'id': user['id'], 'type': user['user_type']})
-    return jsonify({'access_token': access_token, 'user': {'name': user['name'], 'type': user['user_type']}})
+        # Set user in session
+        session['user'] = {
+            'id': user['id'],
+            'name': user['name'],
+            'email': user['email'],
+            'type': user['user_type']
+        }
+
+        flash(f'Welcome back, {user["name"]}!', 'success')
+        return redirect('/')
+
+    return render_template('login.html')
 
 
 # ----------------------------
@@ -66,3 +80,9 @@ def login():
 def profile():
     identity = get_jwt_identity()
     return jsonify({'logged_in_as': identity}), 200
+
+@auth_bp.route('/logout')
+def logout():
+    session.clear()  # ✅ Clears all session data
+    flash('You have been logged out.', 'info')
+    return redirect('/')
